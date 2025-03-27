@@ -86,8 +86,74 @@ var taskListCmd = &cobra.Command{
 	},
 }
 
+var taskDoneCmd = &cobra.Command{
+	Use:   "done [task_id]",
+	Short: "Mark a task as completed",
+	Long:  `Mark a task as completed by providing its ID.`,
+	Args:  cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		idStr := args[0]
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			log.Fatalf("Invalid task ID provided: '%s'. Please provide a number.", idStr)
+		}
+
+		sqlStmt := `UPDATE tasks SET status = ? WHERE id = ?`
+		status := "done"
+
+		result, err := db.DB.Exec(sqlStmt, status, id)
+		if err != nil {
+			log.Fatalf("Failed to mark task %d as done: %v", id, err)
+		}
+
+		rowsAffected, err := result.RowsAffected()
+		if err != nil {
+			log.Printf("Warning: Could not check rows affected after update: %v", err)
+			fmt.Printf("Attempted to mark task %d as done.\n", id)
+		} else if rowsAffected == 0 {
+			fmt.Printf("Task with ID %d not found.\n", id)
+		} else {
+			fmt.Printf("Marked task %d as done.\n", id)
+		}
+	},
+}
+
+var taskRemoveCmd = &cobra.Command{
+	Use:   "remove [task_id]",
+	Short: "Remove a task from your list",
+	Long:  `Remove a task permanently by providing its ID.`,
+	Args:  cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		idStr := args[0]
+
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			log.Fatalf("Invalid task ID provided: '%s'. Please provide a number.", idStr)
+		}
+
+		sqlStmt := `DELETE FROM tasks WHERE id = ?`
+
+		result, err := db.DB.Exec(sqlStmt, id)
+		if err != nil {
+			log.Fatalf("Failed to remove task %d: %v", id, err)
+		}
+
+		rowsAffected, err := result.RowsAffected()
+		if err != nil {
+			log.Printf("Warning: Could not check rows affected after delete: %v", err)
+			fmt.Printf("Attempted to remove task %d.\n", id)
+		} else if rowsAffected == 0 {
+			fmt.Printf("Task with ID %d not found.\n", id)
+		} else {
+			fmt.Printf("Removed task %d.\n", id)
+		}
+	},
+}
+
 func init() {
 	AddCommand(taskCmd)
 	taskCmd.AddCommand(taskAddCmd)
 	taskCmd.AddCommand(taskListCmd)
+	taskCmd.AddCommand(taskDoneCmd)
+	taskCmd.AddCommand(taskRemoveCmd)
 }

@@ -32,7 +32,7 @@ func InitDB() error {
 		return fmt.Errorf("failed to ping database: %w", err)
 	}
 
-	log.Printf("\n*****Database connection established: %s*****", dbPath)
+	// log.Printf("\n*****Database connection established: %s*****", dbPath)
 
 	DB = db
 
@@ -79,7 +79,7 @@ func createTables() error {
 		return fmt.Errorf("failed to create notes table: %w", err)
 	}
 
-	log.Println("Database tables checked/created successfully.")
+	// log.Println("Database tables checked/created successfully.")
 	return nil
 
 }
@@ -87,6 +87,6 @@ func createTables() error {
 func CloseDB() {
 	if DB != nil {
 		DB.Close()
-		log.Println("\n*****Database connection closed.*****")
+		// log.Println("\n*****Database connection closed.*****")
 	}
 }
