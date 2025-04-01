@@ -192,6 +192,67 @@ To get automatic reminders when opening a new terminal/shell session:
 *(Note for PowerShell: If scripts are disabled, you might need `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`.)*
 *(Note for Linux/macOS: Ensure the check command runs quickly and doesn't produce excessive output if using `-s`)*
 
+## Contributing
+
+Contributions are welcome! Whether it's reporting a bug, suggesting a feature, or submitting a pull request, your input is valued.
+
+### Ways to Contribute
+
+*   **Report Bugs:** If you encounter a bug, please open an issue on GitHub detailing the problem, steps to reproduce it, your operating system, and the version of `tmgr` you are using.
+*   **Suggest Enhancements:** Have an idea for a new feature or an improvement to an existing one? Open an issue to discuss it. This allows for feedback before significant development work begins.
+*   **Submit Pull Requests:** If you want to contribute code directly, please follow the workflow below.
+
+### Development Setup
+
+1.  **Fork the repository:** Click the "Fork" button on the top right of the GitHub repository page.
+2.  **Clone your fork:**
+    ```bash
+    git clone https://github.com/57Ajay/go-taskmanagerCLI.git
+    cd go-taskmanagerCLI
+    ```
+3.  **Set up prerequisites:** Ensure you have Go installed (see Installation section) and any necessary C compilers for the SQLite driver.
+4.  **Build the project:**
+    ```bash
+    go build -o tmgr # (or tmgr.exe on Windows)
+    ```
+    You should now be able to run `./tmgr` (or `.\tmgr.exe`) from the project directory.
+
+### Pull Request Workflow
+
+1.  **Create a Branch:** Before making changes, create a new branch off the `main` branch (or the primary development branch):
+    ```bash
+    git checkout main
+    git pull origin main # Ensure you have the latest changes from upstream
+    git checkout -b feature/your-feature-name # e.g., feature/add-task-priority
+    ```
+2.  **Make Changes:** Write your code. Ensure it follows standard Go practices:
+    *   Run `go fmt ./...` to format your code.
+    *   Run `go vet ./...` to check for suspicious constructs.
+    *   Add comments where necessary.
+    *   If adding a new command or flag, update this `README.md` accordingly.
+3.  **Commit Changes:** Make clear, concise commit messages.
+    ```bash
+    git add .
+    git commit -m "feat: Add feature X" -m "Detailed description of the changes made."
+    # Or "fix: Fix bug Y", "docs: Update README", etc.
+    ```
+4.  **Push Branch:** Push your feature branch to *your* fork:
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+5.  **Open a Pull Request (PR):** Go to the original `tmgr` repository on GitHub. You should see a prompt to open a pull request from your recently pushed branch.
+    *   Ensure the PR targets the `main` branch of the original repository.
+    *   Provide a clear title and description for your PR, explaining the "what" and "why" of your changes. Link to any relevant issues (e.g., "Closes #123").
+6.  **Code Review:** Be prepared to discuss your changes and make adjustments based on feedback during the code review process.
+
+### Coding Style
+
+*   Follow standard Go formatting (`go fmt`).
+*   Adhere to Go best practices (effective Go, error handling, etc.).
+*   Keep changes focused – one feature or bug fix per pull request is ideal.
+
+Thank you for contributing!
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
